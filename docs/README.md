@@ -247,7 +247,7 @@ With Docsify-This you can:
 ### Docsify-This Core Design Principles
 
 * Frictionless Markdown publishing
-* Flexible content display control
+* Flexible content display handling
 * Your content, your control
 * Support the 5 Rs of OER
 * Authors helping other authors
@@ -265,7 +265,7 @@ https://docsify-this.net/?basePath=https://raw.githubusercontent.com/hibbitts-de
 
 To render a file stored in a public GitHub repository you need to use the raw source URL of that file (i.e. raw.githubusercontent.com) - tap the **Raw** button when [viewing a file](https://docs.github.com/en/repositories/working-with-files/using-files/viewing-a-file) to get this URL when not using the above Web Page Builder, which does this automatically. It is also possible to render a file stored in a private GitHub repository by activating GitHub Pages within that repository and then using the GitHub Pages URL of that file (i.e. username.github.io).  
 
-The appearance of rendered Markdown files can be customized by optional [URL parameters](/?id=page-appearance-url-parameters) and a small set of available [CSS Classes](/?id=supported-markdown-css-classes) within source Markdown files. In addition to supporting standard Markdown, [Embed.ly](https://embed.ly/code), [H5P](https://h5p.org/), [Katex](https://github.com/upupming/docsify-katex), and [Mermaid Diagrams](https://github.com/Leward/mermaid-docsify) are included. Optionally, page annotation with [Hypothes.is](https://hypothes.is) can be enabled.  
+The appearance of rendered Markdown files can be customized by optional [URL parameters](/?id=page-appearance-url-parameters) and a small set of available [CSS Classes](/?id=supported-markdown-css-classes) within source Markdown files. In addition to supporting standard Markdown, [Embed.ly](https://embed.ly/code), [H5P](https://h5p.org/), [Katex](https://github.com/upupming/docsify-katex), [Mermaid Diagrams](https://github.com/Leward/mermaid-docsify) and [RunKit](https://runkit.com/) are included. Optionally, page annotation with [Hypothes.is](https://hypothes.is) can be enabled.  
 
 Looking for an overall introduction to publishing with Docsify-This? Check out [Markdown Publishing with Docsify-This](https://docsify-this.net/?basePath=https://raw.githubusercontent.com/hibbitts-design/publishing-with-docsify-this/main&sidebar=true&edit-link=https://github.com/hibbitts-design/publishing-with-docsify-this/blob/main/README.md&maxLevel=4&title=Markdown%20Publishing%20with%20Docsify-This).
 
@@ -317,7 +317,7 @@ To use these templates you would generally do the following (template specific i
 
 4. Go to https://docsify-this.net and paste the copied URL into the **Markdown File URL** field
 
-5. Select the page options you want (e.g. Docsify Sidebar) and tap the **View as Standalone Page** button to view your Markdown file as a web page for sharing or embedding  
+5. Select the page options you want (e.g. Docsify Sidebar) and tap the **Publish as a Standalone Web Page** button to view your Markdown file as a web page for sharing or embedding  
 
 Now that the template files are located on your own GitHub account, modify their content to fit your needs.  
 
@@ -748,6 +748,7 @@ The following style prefixes are available with Docsify-This:
 * [image-border](/?id=image-border)
 * [image-border-rounded](/?id=image-border-rounded)
 * [navpill](/?id=navpill)
+* [responsive](/?id=responsive)
 * [row/column](/?id=rowcolumn)
 * [video-container-4by3](/?id=video-container-4by3)
 * [video-container-16by9](/?id=video-container-16by9)
@@ -996,6 +997,13 @@ Scale images with border to %.
 <a class="navpill" href="https://github.com" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
 ```
 
+#### responsive
+Make raw HTML images that include size dimensions responsive.
+
+```html
+<img src="https://raw.githubusercontent.com/hibbitts-design/publishing-with-docsify-this/main/images/docsify-this-web-page-builder.jpg" width="910" height="682" class="responsive image-border" alt="Docsify-This Web Page Builder">
+```
+
 #### row/column
 
 ```html
@@ -1116,6 +1124,26 @@ Markdown:
 
 ### Tips and Techniques
 
+#### Making a Raw Markdown File Available Online
+There are multiple ways to get a raw Markdown file available online, here are three options to help you get started:
+
+**GitHub or Codeberg:**  
+1. Signup for a [GitHub](https://github.com) or [Codeberg](https://codeberg.org) account
+2. Create a new repository and upload your Markdown file
+3. View the uploaded file, and copy/paste that URL into the Docsify-This **Markdown File URL** field
+
+**Gist (GitHub Gists):**
+1. Signup for a [GitHub](https://github.com) account
+1. Create a gist with your Markdown file at https://gist.github.com
+2. Enter a filename ending with `.md` (e.g. `myfile.md`)
+3. Choose **Create public gist** and tap on that button
+4. Tap on **Raw** button in the upper right of your Gist field and copy/paste that URL into the Docsify-This **Markdown File URL** field
+
+**Personal or Organizational Website:**  
+1. Obtain login information for your server
+2. Upload the Markdown file to your server
+3. Navigate to the location of that file, view the contents in your Browser, and copy/paste that URL into the Docsify-This **Markdown File URL** field
+
 #### Matching Fonts with Your Destination Platform Content
 Use a page inspector to identify the font family and font size used in the platform you are embedding Docsify-This content in, and then pass that font family using the `font-family` ([encoded](https://meyerweb.com/eric/tools/dencoder/), where spaces are replaced with '%20') and `font-size` (REM units) URL parameters to Docsify-This. For example, to match fonts with the Canvas LMS:  
 https://docsify-this.net?basePath=https://raw.githubusercontent.com/paulhibbitts/cmpt-363-222-pages/main&homepage=topics.md&font-family=Lato%20Extended,Lato,Helvetica%20Neue,Helvetica,Arial,sans-serif&font-size=1  
@@ -1142,6 +1170,78 @@ function test() {
   console.log("Hello world!");
 }
 ```
+
+#### Including Interactive Javascript Blocks
+Using the Docsify Plugin [RunKit](https://jhildenbiddle.github.io/docsify-plugin-runkit/) interactive JavaScript <abbr title="Read-Eval-Print Loop">REPLs</abbr> powered by RunKit can be embedded, for example to embed a data visualization rendered using [D3.js](https://d3js.org/) the following would be used:  
+
+
+````html
+<div
+  data-runkit
+>
+
+```javascript
+var R = require("ramda");
+var randrange = require("random-number-in-range");
+var d3Graph = require("@runkit/runkit/d3-graph/1.0.0");
+
+var count = 100;
+var nodes = R.range(0, 100).map((_, x) => ({ "name": x, "group": Math.floor(x * 7 / count) }));
+
+var links = R.range(0, Math.floor(count * 1.15)).map(function(_, x) {
+    var source = x % count;
+    var target = Math.floor(Math.log(1 + randrange(0, count)) / Math.log(1.3));
+    var value = 10.0 / (1 + Math.abs(source - target));
+
+    return { "source": source, "target": target, "value": value };
+});
+
+d3Graph(nodes, links);
+```
+
+</div>
+````
+
+Which would then appear as:
+
+<div data-runkit>
+
+```javascript
+var R = require("ramda");
+var randrange = require("random-number-in-range");
+var d3Graph = require("@runkit/runkit/d3-graph/1.0.0");
+
+var count = 100;
+var nodes = R.range(0, 100).map((_, x) => ({ "name": x, "group": Math.floor(x * 7 / count) }));
+
+var links = R.range(0, Math.floor(count * 1.15)).map(function(_, x) {
+    var source = x % count;
+    var target = Math.floor(Math.log(1 + randrange(0, count)) / Math.log(1.3));
+    var value = 10.0 / (1 + Math.abs(source - target));
+
+    return { "source": source, "target": target, "value": value };
+});
+
+d3Graph(nodes, links);
+```
+
+</div>
+
+**Tip:** Press <kbd>⇧ Shift</kbd> <kbd>⌤ Enter</kbd> to "run" the notebook.
+
+#### Including External Markdown Content
+
+The content of external Markdown files can be embedded into Docisfy-This Web pages with the following:
+
+```markdown
+[included Markdown from same source location](example.md ':include')
+```
+
+```markdown
+[included Markdown from URL](https://raw.githubusercontent.com/paulhibbitts/Markdown-File-Tests/main/itworks.md ':include')
+```
+
+For additional examples of including external content, view [Docsify Embeded Files](https://docsify.js.org/#/embed-files?id=embed-files).
 
 #### Use of WikiLinks
 [WikiLinks format](https://help.obsidian.md/Linking+notes+and+files/Internal+links) for links and images are supported, as also found in the desktop editor [Obsidian](https://obsidian.md) and other platforms.  
@@ -1238,6 +1338,8 @@ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css
 
 Docsify-This is intended as a quick way to display one or more remotely located Markdown files. To further customize the rendering of remote files and have the posibility to have an instance of Docsify-This running on a custom domain, fork/clone your own instance of [Docsify-This](https://github.com/hibbitts-design/docsify-this) on GitHub and enable GitHub Pages with the folder `/docs`.  
 
+You can also have an instance of Docsify-This run on [Codeberg](https://codeberg.org/) such as https://docsify-this.codeberg.page by creating a new repository called `pages`, then choosing **paulhibbitts/docsify-this-app** in the **template** dropdown menu, choosing the **Git Content (Default Branch)** option and then tapping the **Create Repository** button.  
+
 If you want to run Docsify-This on your own Websever, create a destination folder on your server and then copy the files within the Docsify-This folder `/docs` to your newly created server folder. 
 
 A more future-friendly setup would be to fork the Docsify-This repository (to support getting upstream updates) and use a GitHub Action such as [FTP-Deploy](https://github.com/SamKirkland/FTP-Deploy-Action) to deploy all repository files to a Webserver and set the `docs` folder as a custom domain root. You can limit the domains which remote files can be rendered from by locating the line `var allowedDomains = '';` within the `index.html` file and include your list of allowed domains separated by commas, for example `var allowedDomains = 'codeberg.org,raw.githubusercontent.com,hibbittsdesign.org';`.  
@@ -1303,7 +1405,7 @@ Docsify-This (as with Docsify itself) will only execute the first script include
 * Only this web page (containing the Web Page Builder) uses [Google Analytics in a GDPR manner](https://support.google.com/analytics/answer/9019185?hl=en#IP&zippy=%2Cin-this-article)
 * Web pages generated by remote Markdown files are not tracked in any manner by Google Analytics
 * The web service [H5P](https://h5p.org/privacy) is automatically loaded when displaying remote Markdown files
-* The open source JavaScript tool [Mermaid](https://mermaid.js.org/) is automatically loaded via [UNPKG](https://unpkg.com/) when displaying remote Markdown files
+* The open source JavaScript tool [Mermaid](https://mermaid.js.org/) is automatically loaded via [jsDelivr](https://www.jsdelivr.com/terms) when displaying remote Markdown files
 * The web service [Hypothes.is](https://web.hypothes.is/privacy/) is only loaded if chosen when displaying remote Markdown files
 * The web service [Embed.ly](https://embed.ly/legal/privacy) is only loaded if [Embedly Card](https://embed.ly/cards) elements are present in remote Markdown files
 

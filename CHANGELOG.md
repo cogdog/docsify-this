@@ -1,14 +1,43 @@
 # Changelog
 
-## [1.9.4] - XX/XX/2024
+## [1.9.6] - XX/XX/2024
+
+**New:**
+* New Open Graph image for social media
+
+**Improved:**
+* Updated ReadMe
+* Added CSS Markdown class to support responsive HTML images `responsive`
+
+**Bugfix:**
+* Added CSS to automatically wrap links that overflow
+* Fixed URL error checking for raw GitHub Gists
+
+## [1.9.5] - 04/29/2024🏒
+
+**New:**
+* Support for .markdown file extension in addition to .md
+* Added Docsify RunKit plugin (with thanks and appreciation to @jhildenbiddle for developing the plugin)
+
+**Improved:**
+* Updated ReadMe
+
+**Bugfix:**
+* Remove CSS for use with accordion elements with plain details/summary elements
+
+## [1.9.4] - 03/28/2024
 
 **Improved:**
 * Updated ReadMe
 * Updated to use Coloris v0.22.0
 * Updated to use docsify-tabs plugin 1.6.2
+* Support display of site name with standard Docsify Sidebar
+* Streamline handling of local URLs to handle 'Edit this Page' links and use of hypothesis
+* Streamline hook.doneEach script
+* Code of Conduct now located in .github Repository
 
 **Bugfix:**
-* Remove extra <br> elements when credits are visible
+* Remove extra `<br>` elements when credits are visible
 
 ## [1.9.3] - 02/22/2024
 
